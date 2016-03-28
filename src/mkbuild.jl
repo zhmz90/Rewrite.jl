@@ -1,4 +1,4 @@
-
+println("in the mkbuild.jl")
 
 @doc """ copy build file from destine dir to source dir
 """ ->
