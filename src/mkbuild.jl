@@ -1,18 +1,25 @@
-println("in the mkbuild.jl")
+
 
 @doc """ copy build file from destine dir to source dir
 """ ->
-function cpbuild(dst, src)
-    build_fl = joinpath(dst, "BUILD")
+function makebuild(dst, src)
+    build_fl = joinpath(src, "BUILD")
     @assert isfile(build_fl)
     
     data = readlines(build_fl)
     
     srcname = basename(src)
-    data = replace(data, r"name = \"[a-z]+\"", srcname)
+    dstname = basename(dst)
 
-    dstbuild = joinpath(src, "BUILD")
-    #write(dstbuild, data)
+    data = convert(Array{ASCIIString,1}, data)
+
+    #rstr = Regex("name = \"$(srcname)\"")
+
+    data = map(line->replace(line, srcname, dstname), data)
+    
+    dstbuild = joinpath(dst, "BUILD")
+    
+    write(dstbuild, data)
 end
 
 

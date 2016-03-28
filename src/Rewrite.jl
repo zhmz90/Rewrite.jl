@@ -5,7 +5,7 @@ include("mkbuild.jl")
 function rename_package!(filepath, newname)
     lines = readlines(filepath)
     for (ind,line) in emumerate(lines)
-        if line[1:7] = "package"
+        if line[1:7] == "package"
             lines[ind] = string("package"," ", newname)
         end
     end
@@ -22,10 +22,10 @@ function remove_comment!(filepath)
     st = ed = 0
     state = false
     for (ind, line) in emumerate(lines)
-        if line[1:2] = "/*"
+        if line[1:2] == "/*"
             st = ind
             state = true
-        elseif st != 0 && line[1:2] = "* "
+        elseif st != 0 && line[1:2] == "* "
             @assert state == true
         elseif line[1:2] == "*/"
             @assert state == true
